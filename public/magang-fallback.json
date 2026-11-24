@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1001,
+    "title": "Frontend Intern (React & TypeScript)",
+    "company_name": "Nusantara Cloud Tech",
+    "category": "Software Development",
+    "candidate_required_location": "Surabaya (Hybrid)",
+    "salary": "Rp 4.500.000 / bulan",
+    "tags": ["React", "TypeScript", "CSS", "Git", "REST API"]
+  },
+  {
+    "id": 1002,
+    "title": "Full-Stack Web Developer Intern",
+    "company_name": "Garuda FinTech",
+    "category": "Software Development",
+    "candidate_required_location": "Jakarta (Remote)",
+    "salary": "Rp 5.500.000 / bulan",
+    "tags": ["React", "TypeScript", "PostgreSQL", "Express", "Prisma"]
+  },
+  {
+    "id": 1003,
+    "title": "Software Engineer Intern - Web Platform",
+    "company_name": "Bintang Commerce",
+    "category": "Software Development",
+    "candidate_required_location": "Indonesia (Remote)",
+    "salary": "Rp 6.000.000 / bulan",
+    "tags": ["React", "TypeScript", "CSS", "Git", "Testing"]
+  },
+  {
+    "id": 1004,
+    "title": "DevOps & Cloud Infrastructure Intern",
+    "company_name": "AwanMerdeka Cloud",
+    "category": "DevOps / Sysadmin",
+    "candidate_required_location": "Jakarta (Remote)",
+    "salary": "Rp 5.200.000 / bulan",
+    "tags": ["Git", "PostgreSQL", "Linux", "Docker", "CI/CD"]
+  },
+  {
+    "id": 1005,
+    "title": "UI/UX & Frontend Design Intern",
+    "company_name": "Kreasi Digital Studio",
+    "category": "Design",
+    "candidate_required_location": "Bandung (Hybrid)",
+    "salary": "Rp 4.000.000 / bulan",
+    "tags": ["CSS", "Figma", "React", "HTML", "Tailwind"]
+  },
+  {
+    "id": 1006,
+    "title": "Backend Node.js Developer Intern",
+    "company_name": "Solusi Data Nusantara",
+    "category": "Software Development",
+    "candidate_required_location": "Surabaya (Onsite)",
+    "salary": "Rp 4.800.000 / bulan",
+    "tags": ["Node.js", "TypeScript", "PostgreSQL", "REST API", "Docker"]
+  },
+  {
+    "id": 1007,
+    "title": "Mobile React Native Intern",
+    "company_name": "Gerak Cepat Logistik",
+    "category": "Software Development",
+    "candidate_required_location": "Jakarta (Hybrid)",
+    "salary": "Rp 5.000.000 / bulan",
+    "tags": ["React", "TypeScript", "REST API", "Git"]
+  },
+  {
+    "id": 1008,
+    "title": "QA Automation Engineer Intern",
+    "company_name": "Siber Aman Indonesia",
+    "category": "QA",
+    "candidate_required_location": "Indonesia (Remote)",
+    "salary": "Rp 4.700.000 / bulan",
+    "tags": ["TypeScript", "Testing", "Git", "CI/CD"]
+  },
+  {
+    "id": 1009,
+    "title": "Junior Frontend Engineer Intern",
+    "company_name": "EduSpark Indonesia",
+    "category": "Software Development",
+    "candidate_required_location": "Yogyakarta (Remote)",
+    "salary": "Rp 4.200.000 / bulan",
+    "tags": ["React", "CSS", "HTML", "JavaScript"]
+  },
+  {
+    "id": 1010,
+    "title": "Data Engineering Intern",
+    "company_name": "Analitika Cerdas",
+    "category": "Data",
+    "candidate_required_location": "Jakarta (Hybrid)",
+    "salary": "Rp 5.300.000 / bulan",
+    "tags": ["Python", "SQL", "PostgreSQL", "Docker"]
+  },
+  {
+    "id": 1011,
+    "title": "Security Operations Analyst Intern",
+    "company_name": "Perisai Digital",
+    "category": "DevOps / Sysadmin",
+    "candidate_required_location": "Surabaya (Onsite)",
+    "salary": "Rp 5.100.000 / bulan",
+    "tags": ["Linux", "Networking", "Python", "Git"]
+  },
+  {
+    "id": 1012,
+    "title": "Product Engineer Intern",
+    "company_name": "Rintisan Karya",
+    "category": "Software Development",
+    "candidate_required_location": "Indonesia (Remote)",
+    "salary": "Rp 5.800.000 / bulan",
+    "tags": ["React", "TypeScript", "CSS", "Node.js"]
+  },
+  {
+    "id": 1013,
+    "title": "Web Accessibility & CSS Specialist Intern",
+    "company_name": "Inklusi Tech",
+    "category": "Design",
+    "candidate_required_location": "Malang (Remote)",
+    "salary": "Rp 3.900.000 / bulan",
+    "tags": ["CSS", "HTML", "React", "Accessibility"]
+  },
+  {
+    "id": 1014,
+    "title": "Cloud & Kubernetes Intern",
+    "company_name": "InfraNusa",
+    "category": "DevOps / Sysadmin",
+    "candidate_required_location": "Jakarta (Remote)",
+    "salary": "Rp 5.600.000 / bulan",
+    "tags": ["Docker", "Kubernetes", "Linux", "CI/CD"]
+  },
+  {
+    "id": 1015,
+    "title": "Full-Stack TypeScript Intern",
+    "company_name": "Veloce Systems",
+    "category": "Software Development",
+    "candidate_required_location": "Surabaya (Hybrid)",
+    "salary": "Rp 5.400.000 / bulan",
+    "tags": ["React", "TypeScript", "CSS", "PostgreSQL", "Git"]
+  }
+]
