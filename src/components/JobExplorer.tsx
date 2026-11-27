@@ -47,8 +47,6 @@ export function JobExplorer({
 
   useEffect(() => {
     const controller = new AbortController();
-    setIsLoading(true);
-    setError(null);
 
     fetchJobListings(dataSource, controller.signal)
       .then((data) => {
@@ -71,6 +69,23 @@ export function JobExplorer({
       controller.abort();
     };
   }, [dataSource, retryTrigger]);
+
+  const handleRetry = () => {
+    setIsLoading(true);
+    setError(null);
+    setRetryTrigger((prev) => prev + 1);
+  };
+
+  const handleChangeDataSource = (mode: DataSourceMode) => {
+    setSelectedCategory("ALL");
+    setIsLoading(true);
+    setError(null);
+    if (mode === dataSource) {
+      setRetryTrigger((prev) => prev + 1);
+    } else {
+      setDataSource(mode);
+    }
+  };
 
   const categories = useMemo(() => {
     const unique = new Set(jobs.map((job) => job.category));
@@ -121,10 +136,7 @@ export function JobExplorer({
           onAddSkill={onAddSkill}
           onRemoveSkill={onRemoveSkill}
           dataSource={dataSource}
-          onChangeDataSource={(mode) => {
-            setSelectedCategory("ALL");
-            setDataSource(mode);
-          }}
+          onChangeDataSource={handleChangeDataSource}
         />
       </div>
 
@@ -184,7 +196,7 @@ export function JobExplorer({
             <div className="flex flex-wrap justify-center gap-2">
               <button
                 type="button"
-                onClick={() => setRetryTrigger((prev) => prev + 1)}
+                onClick={handleRetry}
                 className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg inline-flex items-center gap-1.5 transition-colors"
               >
                 <RefreshCw className="w-3.5 h-3.5" />

@@ -27,7 +27,7 @@ export function UndoToast({
         className="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg inline-flex items-center gap-1 shrink-0 transition-colors"
       >
         <RotateCcw className="w-3.5 h-3.5" />
-        Undo (5d)
+        Undo (5 detik)
       </button>
 
       <button

@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { Plus, Compass, Layers, Scale } from "lucide-react";
 import type {
   Application,
@@ -14,6 +14,7 @@ import { ConflictBanner } from "./components/ConflictBanner";
 import { WarRoomPipeline } from "./components/WarRoomPipeline";
 import { UndoToast } from "./components/UndoToast";
 import { StatsHeader } from "./components/StatsHeader";
+import { ApplicationDetailModal } from "./components/ApplicationDetailModal";
 
 type ActiveTab = "EXPLORE" | "PIPELINE" | "COMPARATOR";
 
@@ -43,6 +44,26 @@ export function App() {
     () => detectInterviewConflicts(applications),
     [applications]
   );
+  const selectedApplication = applications.find((app) => app.id === selectedAppId) ?? null;
+
+  useEffect(() => () => {
+    if (undoTimerRef.current !== null) window.clearTimeout(undoTimerRef.current);
+  }, []);
+
+  const handleUpdateApplication = (
+    id: string,
+    update: Partial<Application>,
+    logMessage?: string
+  ) => {
+    const now = new Date().toISOString();
+    setApplications((prev) => prev.map((app) => {
+      if (app.id !== id) return app;
+      const activityLogs = logMessage
+        ? [...app.activityLogs, { id: crypto.randomUUID(), timestamp: now, message: logMessage }]
+        : app.activityLogs;
+      return { ...app, ...update, lastUpdatedAt: now, activityLogs };
+    }));
+  };
 
   const handleAddSkill = (newSkill: string): boolean => {
     const exists = kaptenSkills.some(
@@ -284,6 +305,15 @@ export function App() {
           </div>
         )}
       </main>
+
+      {selectedApplication && (
+        <ApplicationDetailModal
+          application={selectedApplication}
+          kaptenSkills={kaptenSkills}
+          onClose={() => setSelectedAppId(null)}
+          onUpdate={handleUpdateApplication}
+        />
+      )}
 
       <ManualApplicationModal
         isOpen={isManualModalOpen}
