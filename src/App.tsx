@@ -15,6 +15,7 @@ import { WarRoomPipeline } from "./components/WarRoomPipeline";
 import { UndoToast } from "./components/UndoToast";
 import { StatsHeader } from "./components/StatsHeader";
 import { ApplicationDetailModal } from "./components/ApplicationDetailModal";
+import { OfferComparator } from "./components/OfferComparator";
 
 type ActiveTab = "EXPLORE" | "PIPELINE" | "COMPARATOR";
 
@@ -294,15 +295,11 @@ export function App() {
         )}
 
         {activeTab === "COMPARATOR" && (
-          <div className="bg-white border border-slate-200 rounded-xl p-8 text-center">
-            <h2 className="text-base font-bold text-slate-800">
-              Slot Komponen Orang 3: Offer Comparator
-            </h2>
-            <p className="text-xs text-slate-500 mt-1">
-              Total lamaran berstatus OFFER saat ini:{" "}
-              <strong>{offerCount}</strong>
-            </p>
-          </div>
+          <OfferComparator
+            applications={applications}
+            kaptenSkills={kaptenSkills}
+            onUpdateApplication={handleUpdateApplication}
+          />
         )}
       </main>
 
