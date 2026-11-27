@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Plus, Compass, Layers, Scale } from "lucide-react";
 import type {
   Application,
@@ -7,8 +7,12 @@ import type {
 } from "./types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { inferWorkMode, isDuplicateApplication } from "./utils/jobUtils";
+import { detectInterviewConflicts } from "./utils/pipelineUtils";
 import { JobExplorer } from "./components/JobExplorer";
 import { ManualApplicationModal } from "./components/ManualApplicationModal";
+import { ConflictBanner } from "./components/ConflictBanner";
+import { WarRoomPipeline } from "./components/WarRoomPipeline";
+import { UndoToast } from "./components/UndoToast";
 
 type ActiveTab = "EXPLORE" | "PIPELINE" | "COMPARATOR";
 
@@ -26,6 +30,18 @@ export function App() {
 
   const [activeTab, setActiveTab] = useState<ActiveTab>("EXPLORE");
   const [isManualModalOpen, setIsManualModalOpen] = useState<boolean>(false);
+  const [selectedAppId, setSelectedAppId] = useState<string | null>(null);
+
+  const [deletedBuffer, setDeletedBuffer] = useState<{
+    app: Application;
+    index: number;
+  } | null>(null);
+  const undoTimerRef = useRef<number | null>(null);
+
+  const conflicts = useMemo(
+    () => detectInterviewConflicts(applications),
+    [applications]
+  );
 
   const handleAddSkill = (newSkill: string): boolean => {
     const exists = kaptenSkills.some(
@@ -101,6 +117,70 @@ export function App() {
     setApplications((prev) => [newApp, ...prev]);
   };
 
+  const handleSimulateGhosting = (id: string) => {
+    const fifteenDaysMs = 15 * 24 * 60 * 60 * 1000;
+    setApplications((prev) =>
+      prev.map((app) => {
+        if (app.id !== id) return app;
+        const currentTs = new Date(app.lastUpdatedAt).getTime();
+        const baseTs = Number.isNaN(currentTs) ? Date.now() : currentTs;
+        const shiftedIso = new Date(baseTs - fifteenDaysMs).toISOString();
+        return {
+          ...app,
+          lastUpdatedAt: shiftedIso,
+        };
+      })
+    );
+  };
+
+  const handleDeleteApplication = (targetApp: Application) => {
+    const targetIndex = applications.findIndex((a) => a.id === targetApp.id);
+    if (targetIndex === -1) return;
+
+    if (undoTimerRef.current !== null) {
+      window.clearTimeout(undoTimerRef.current);
+      undoTimerRef.current = null;
+    }
+
+    setApplications((prev) => prev.filter((a) => a.id !== targetApp.id));
+    if (selectedAppId === targetApp.id) {
+      setSelectedAppId(null);
+    }
+
+    setDeletedBuffer({ app: targetApp, index: targetIndex });
+
+    undoTimerRef.current = window.setTimeout(() => {
+      setDeletedBuffer(null);
+      undoTimerRef.current = null;
+    }, 5000);
+  };
+
+  const handleUndoDelete = () => {
+    if (!deletedBuffer) return;
+
+    if (undoTimerRef.current !== null) {
+      window.clearTimeout(undoTimerRef.current);
+      undoTimerRef.current = null;
+    }
+
+    setApplications((prev) => {
+      const next = [...prev];
+      const insertAt = Math.min(deletedBuffer.index, next.length);
+      next.splice(insertAt, 0, deletedBuffer.app);
+      return next;
+    });
+
+    setDeletedBuffer(null);
+  };
+
+  const handleDismissToast = () => {
+    if (undoTimerRef.current !== null) {
+      window.clearTimeout(undoTimerRef.current);
+      undoTimerRef.current = null;
+    }
+    setDeletedBuffer(null);
+  };
+
   const offerCount = applications.filter((a) => a.status === "OFFER").length;
 
   return (
@@ -169,6 +249,8 @@ export function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <ConflictBanner conflicts={conflicts} />
+
         {activeTab === "EXPLORE" && (
           <JobExplorer
             kaptenSkills={kaptenSkills}
@@ -180,15 +262,13 @@ export function App() {
         )}
 
         {activeTab === "PIPELINE" && (
-          <div className="bg-white border border-slate-200 rounded-xl p-8 text-center">
-            <h2 className="text-base font-bold text-slate-800">
-              Slot Komponen Orang 2: War Room Pipeline & Detail Lamaran
-            </h2>
-            <p className="text-xs text-slate-500 mt-1">
-              Total lamaran tersimpan di localStorage saat ini:{" "}
-              <strong>{applications.length}</strong>
-            </p>
-          </div>
+          <WarRoomPipeline
+            applications={applications}
+            kaptenSkills={kaptenSkills}
+            onSimulateGhosting={handleSimulateGhosting}
+            onDeleteApplication={handleDeleteApplication}
+            onSelectApplication={(app) => setSelectedAppId(app.id)}
+          />
         )}
 
         {activeTab === "COMPARATOR" && (
@@ -209,6 +289,12 @@ export function App() {
         onClose={() => setIsManualModalOpen(false)}
         applications={applications}
         onSubmitApplication={handleAddManualApplication}
+      />
+
+      <UndoToast
+        deletedApp={deletedBuffer?.app ?? null}
+        onUndo={handleUndoDelete}
+        onDismiss={handleDismissToast}
       />
     </div>
   );
