@@ -13,6 +13,7 @@ import { ManualApplicationModal } from "./components/ManualApplicationModal";
 import { ConflictBanner } from "./components/ConflictBanner";
 import { WarRoomPipeline } from "./components/WarRoomPipeline";
 import { UndoToast } from "./components/UndoToast";
+import { StatsHeader } from "./components/StatsHeader";
 
 type ActiveTab = "EXPLORE" | "PIPELINE" | "COMPARATOR";
 
@@ -250,7 +251,7 @@ export function App() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <ConflictBanner conflicts={conflicts} />
-
+        <StatsHeader applications={applications} />
         {activeTab === "EXPLORE" && (
           <JobExplorer
             kaptenSkills={kaptenSkills}
