@@ -2,6 +2,12 @@
 
 Aplikasi **Internship Application Tracker & Job Explorer** berbasis React + TypeScript + Tailwind CSS v4 (Vite).
 
+| Nama | NRP |
+| --- | --- |
+| Afriezal Suryapraba Laiasach | 5027251096 | 
+| Muhammad Yusuf | 5027251067 | 
+| Sebastian Panjaitan | 5027251040 |
+
 ---
 
 ## 1. Prasyarat & Setup Awal
